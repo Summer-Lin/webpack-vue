@@ -1,5 +1,6 @@
 const webpack = require('webpack');
 const path = require("path");
+const { resolve } = require('path');
 // vue-loader 版本15.+都要用这个插件
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 // html插件
@@ -19,27 +20,7 @@ module.exports = {
                 //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
                 loader: 'happypack/loader?id=happyBabel',
                 //排除node_modules 目录下的文件
-                exclude: /node_modules/
-            },
-            
-           
-            {
-                test: /\.css$/,
-                use: [
-                  'style-loader',
-                  'css-loader',
-                  'postcss-loader'
-                ]
-            },
-         
-            {
-                test: /\.less$/,
-                use: [
-                  'style-loader',
-                  'css-loader',
-                  'postcss-loader',
-                  'less-loader',
-                ],
+                exclude: /node_modules/,
             },
         
             {
@@ -47,20 +28,20 @@ module.exports = {
                 loader: 'vue-loader'
             },
 
+            // 处理字体
             {
-                test: /\.(png|svg|jpg|gif)$/,
-                use: [
-                  {
-                    loader: 'file-loader',
-                    options: {
-                      limit: 5000,
-                      // 分离图片至imgs文件夹
-                      name: "imgs/[name].[ext]",
-                    }
-                  },
-                ]
-            },
+              test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+              loader: 'url-loader',
+            }
         ]
+    },
+
+    resolve: {
+        extensions: ['.js', '.vue'],
+        alias: {
+            vue: 'vue/dist/vue.esm.js',
+            '@': resolve('src'),
+        },
     },
 
     // 插件
@@ -75,19 +56,19 @@ module.exports = {
         }),
 
         new HappyPack({
-          //用id来标识 happypack处理类文件
-          id: "happyBabel",
-          //如何处理 用法和loader 的配置一样
-          loaders: [
-            {
-              loader: "babel-loader?cacheDirectory=true"
-            }
-          ],
-          //共享进程池
-          threadPool: happyThreadPool,
-          //允许 HappyPack 输出日志
-          verbose: true
-        })
+            //用id来标识 happypack处理类文件
+            id: 'happyBabel',
+            //如何处理 用法和loader 的配置一样
+            loaders: [
+                {
+                    loader: 'babel-loader?cacheDirectory=true',
+                },
+            ],
+            //共享进程池
+            threadPool: happyThreadPool,
+            //允许 HappyPack 输出日志
+            verbose: true,
+        }),
     ],
 };
 

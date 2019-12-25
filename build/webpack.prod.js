@@ -6,9 +6,12 @@ const common = require('./webpack.base.js');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 // 分离CSS插件
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// 压缩CSS和JS代码
+// 压缩CSS
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
-const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+// 压缩JS代码
+// uglifyjs-webpack-plugin 换成 terser-webpack-plugin 进行压缩代码, 
+//webpack 5开始支持这个选项
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = merge(common, {
   
@@ -33,22 +36,28 @@ module.exports = merge(common, {
       }
     },
 
+    minimize: true,
+
     minimizer: [
       // 压缩JS
-      new UglifyJsPlugin({
-        uglifyOptions: {
-          compress: {
-            warnings: false, // 去除警告
-            drop_debugger: true, // 去除debugger
-            drop_console: true // 去除console.log
-          },
-        },
+      new TerserPlugin({
+        parallel: true, // 多线程平行压缩
         cache: true, // 开启缓存
-        parallel: true, // 平行压缩
-        sourceMap: false // set to true if you want JS source maps
+        terserOptions: {
+          ecma: undefined,  // 指定ES6,7,8... 版本
+          warnings: false, // 去除警告
+          parse: {},
+          compress: {
+            drop_console: true,
+            drop_debugger: true,        // 去除debugger
+            pure_funcs: ['console.log'] // 移除console
+          }
+        }
       }),
+      
+    
       // 压缩css
-      new OptimizeCSSAssetsPlugin({})
+      new OptimizeCSSAssetsPlugin()
     ]
     
   },
@@ -89,23 +98,46 @@ module.exports = merge(common, {
         {
           test: /\.(png|svg|jpg|gif)$/,
           use: [
-            {
-              loader: 'file-loader',
-              options: {
-                limit: 5000,
-                name: "imgs/[hash].[ext]",
-              }
-            }
-          ]
+              {
+                  loader: 'file-loader',
+                  options: {
+                      limit: 5000,
+                      name: 'imgs/[hash].[ext]',
+                  },
+              },
+              // 图片压缩
+              // {
+              //     loader: 'image-webpack-loader',
+              //     options: {
+              //         //   bypassOnDebug: true,
+              //         mozjpeg: {
+              //             progressive: true,
+              //             quality: 65,
+              //         },
+              //         optipng: {
+              //             enabled: false,
+              //         },
+              //         pngquant: {
+              //             quality: '65-90',
+              //             speed: 4,
+              //         },
+              //         gifsicle: {
+              //             interlaced: false,
+              //         },
+              //     },
+              // },
+          ],
         },
       ]
   },
   plugins: [
+    //删除之前打包好的内容
     new CleanWebpackPlugin(),
 
     new MiniCssExtractPlugin({
-        filename: "css/[name].[hash].css",
-        chunkFilename: 'css/[id].[hash].css'
+        // contenthash 只改变修改的内容文件的哈希值
+        filename: "css/[name].[contenthash].css",
+        
     }),
   ],
 });

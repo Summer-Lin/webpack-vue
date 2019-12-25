@@ -13,9 +13,44 @@ module.exports = merge(common, {
 
     // 开发服务器
     devServer: { 
-      contentBase: '../dist'
+        port: 8080,
+        contentBase: '../dist',
+        host: 'localhost',
     },
    
-    module: {},
+    module: {
+        rules: [
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader'
+                ],
+            },
+            {
+                test: /\.less$/,
+                use: [
+                    'style-loader',
+                    'css-loader',
+                    'postcss-loader',
+                    'less-loader',
+                ],
+            },
+            {
+                test: /\.(png|svg|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            limit: 5000,
+                            name: 'imgs/[name].[ext]',
+                            // publicPath: '../'
+                        },
+                    },
+                ],
+            },
+        ],
+    },  
  
 });
