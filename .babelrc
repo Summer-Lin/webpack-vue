@@ -1,3 +1,13 @@
 {
-    "plugins": ["@babel/plugin-syntax-dynamic-import"]
-  }
+  "plugins": [
+      //动态引入Import
+      "@babel/plugin-syntax-dynamic-import",
+
+      //按需加载iview组件，减少文件体积
+      // ["import", {
+      //     "libraryName": "view-design",
+      //     "libraryDirectory": "src/components"
+      // }]
+  ]
+    
+}

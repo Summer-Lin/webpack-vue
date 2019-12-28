@@ -87,14 +87,14 @@ export default {
       openNames: [],
       //菜单
       menuArray: [
-        { name: "首页", path: "/home" },
-        { name: "产品", path: "/product" },
+        { name: this.$t('layout.home'), path: "/home" },
+        { name: this.$t('layout.product'), path: "/product" },
         {
-          name: "商户管理",
+          name: this.$t('layout.merchant'),
           path: "/merchant",
           children: [
-            { parent: "/merchant", name: "自助添加", path: "/merchant/add" },
-            { parent: "/merchant", name: "自助详情", path: "/merchant/detail" }
+            { parent: "/merchant", name: this.$t('layout.merchantAdd'), path: "/merchant/add" },
+            { parent: "/merchant", name: this.$t('layout.merchantDetail'), path: "/merchant/detail" }
           ]
         }
       ]

@@ -1,6 +1,10 @@
 [webpack参考链接](https://juejin.im/post/5b7d350951882542f3278b11#heading-0)
 [对应的github项目](https://github.com/zxpsuper/createVue)
 [webpack详细配置](https://juejin.im/post/5de87444518825124c50cd36)
+[elementUI动态加载多语言](https://segmentfault.com/a/1190000020740061)
+
+[另外一种多语言解决方法](https://github.com/kazupon/vue-i18n/issues/223)
+
 #浅谈前端性能优化
 
 ### 技术框架
