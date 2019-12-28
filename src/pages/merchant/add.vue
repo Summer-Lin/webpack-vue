@@ -1,16 +1,16 @@
 <template>
-  <div class="container">
+  <div class="add">
     <p class="title">
-      <span class="icon iconfont">&#xe636;</span>
-      {{$t('product.title')}}
+      <span class="icon iconfont">&#xe6bd;</span>
+      {{$t('merchantAdd.title')}}
     </p>
 
     <div class="form">
       <Form :model="formItem" :label-width="100" inline>
-        <FormItem :label="$t('product.input1')">
+        <FormItem :label="$t('merchantAdd.input1')">
           <Input v-model="formItem.input1"></Input>
         </FormItem>
-        <FormItem :label="$t('product.input2')">
+        <FormItem :label="$t('merchantAdd.input2')">
           <Input v-model="formItem.input12"></Input>
         </FormItem>
 
@@ -26,14 +26,16 @@
     <div class="page">
       <Page :total="100" show-sizer />
     </div>
+
+    <div class="img">
+      <img src="../../images/1.png" alt />
+    </div>
   </div>
 </template>
 
 <script>
 import { getUrlParams } from "../../utils/global.js";
 export default {
-  name: "Product",
-
   data() {
     return {
       searchParams: "",
@@ -48,21 +50,21 @@ export default {
             title: "Name",
             key: "name",
             renderHeader: (h, params) => {
-              return h("div", this.$t("product.name"));
+              return h("div", this.$t("merchantAdd.name"));
             }
           },
           {
             title: "Age",
             key: "age",
-             renderHeader: (h, params) => {
-              return h("div", this.$t("product.age"));
+            renderHeader: (h, params) => {
+              return h("div", this.$t("merchantAdd.age"));
             }
           },
           {
             title: "Address",
             key: "address",
-             renderHeader: (h, params) => {
-              return h("div", this.$t("product.address"));
+            renderHeader: (h, params) => {
+              return h("div", this.$t("merchantAdd.address"));
             }
           }
         ],
@@ -103,8 +105,8 @@ export default {
 };
 </script>
 
-<style lang="less" scoped>
-.container {
+<style lang="less">
+.add {
   height: 100%;
   .title {
     padding: 10px 20px;
@@ -120,6 +122,11 @@ export default {
   .page {
     padding: 10px;
     text-align: right;
+  }
+
+  img {
+    width: 50px;
+    height: 50px;
   }
 }
 </style>

@@ -45,6 +45,8 @@ module.exports = merge(common, {
                         options: {
                             limit: 5000,
                             name: 'imgs/[name].[ext]',
+                            //启用CommonJS模块语法, img src路径不会显示 object module
+                            esModule: false
                             // publicPath: '../'
                         },
                     },

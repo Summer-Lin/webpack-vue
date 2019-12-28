@@ -12,6 +12,14 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 // uglifyjs-webpack-plugin 换成 terser-webpack-plugin 进行压缩代码, 
 //webpack 5开始支持这个选项
 const TerserPlugin = require('terser-webpack-plugin');
+//代码分析器
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+
+
+let mergePlugins = []
+if (process.env.NODE_ENV === "analyzer") {
+  mergePlugins.push(new BundleAnalyzerPlugin())
+}
 
 module.exports = merge(common, {
   
@@ -33,10 +41,14 @@ module.exports = merge(common, {
           priority: 10,
           chunks: "initial" // 只打包初始时依赖的第三方
         },
+
+        default: {
+          minChunks: 2,
+          priority: 90,   // 优先级配置项
+          reuseExistingChunk: true
+        }
       }
     },
-
-    minimize: true,
 
     minimizer: [
       // 压缩JS
@@ -102,6 +114,8 @@ module.exports = merge(common, {
                   loader: 'file-loader',
                   options: {
                       limit: 5000,
+                       //启用CommonJS模块语法, img src路径不会显示 object module
+                      esModule: false,
                       name: 'imgs/[hash].[ext]',
                   },
               },
@@ -138,6 +152,7 @@ module.exports = merge(common, {
         // contenthash 只改变修改的内容文件的哈希值
         filename: "css/[name].[contenthash].css",
         
-    }),
-  ],
+    })
+
+  ].concat(mergePlugins),
 });
