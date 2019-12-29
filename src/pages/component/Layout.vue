@@ -86,6 +86,7 @@ export default {
       activeName: "",
       openNames: [],
       //菜单
+      // menuArray:[],
       menuArray: [
         { name: this.$t('layout.home'), path: "/home" },
         { name: this.$t('layout.product'), path: "/product" },
