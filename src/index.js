@@ -4,7 +4,7 @@ import router from "./router/index"
 import "./style/reset.css"
 import "./font/iconfont.css"
 import i18n from './lang/index.js'
-import { loadLanguageAsync } from "@/lang/index.js"
+import { setup } from "@/lang/index.js";
 import {LOCALE_KEY} from "@/utils/config.js"
 import {storage} from "@/utils/global.js"
 
@@ -20,10 +20,10 @@ Vue.use(ViewUI);
 
 
 
-router.beforeEach((to, from, next) => {
-  let lang = storage.getItem(LOCALE_KEY)
-  loadLanguageAsync(lang).then(() => next())
-})
+// router.beforeEach((to, from, next) => {
+//   let lang = storage.getItem(LOCALE_KEY)
+//   loadLanguageAsync(lang).then(() => next())
+// })
 
 new Vue({
   el: '#app',
