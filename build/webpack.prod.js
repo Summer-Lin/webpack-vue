@@ -24,7 +24,8 @@ if (process.env.NODE_ENV === "analyzer") {
 module.exports = merge(common, {
   mode: "production",
   output: {
-    filename: "js/[name].[contenthash].js", //contenthash 若文件内容无变化，则contenthash 名称不变
+    // chunkhash是针对entry的每一个入口文件，独立的hash。如果entry里面的其中一个文件内容改变，只会改变这个入口文件build之后的文件名，而不会影响到其他文件
+    filename: "js/[name].[chunkhash].js", //contenthash 若文件内容无变化，则contenthash 名称不变
     path: path.resolve(__dirname, "../dist")
   },
 
