@@ -67,7 +67,33 @@
             - 测试连接 https://tools.keycdn.com/http2-test
 
 - 打包工具 
+    - hash/chunkhash/contenthash区别
+        - hash:每次改变都会统一成一样的hash值.
+        - chunkhash:根据entry, child chunk改变,main.js会跟着改. 其他的不变.
+        - contenthash: 内容改变,hash也改变, webpack 4以前用在 css
+            - 同个组件的样式更改,css 的hash改变, 对应的js 和 main.js也改变
+            - 只改变公共样式,引入main.js的样式, 则main.css 和 main.js改变
+        
     - css抽离 (mini-css-extract-plugin 抽离/optimize-css-assets-webpack-plugin 压缩)
-        - 使用 contenthash, 这样打包只修改改变的文件
-    - js代码压缩(terser-webpack-plugin)  
-    - filename采用 chunkhash, 打包hash只改变更改的文件,利用浏览器缓存  
+        - 使用 contenthash, 这样打包只修改改变的文件.
+     
+    - js代码压缩(terser-webpack-plugin/uglifyjs-webpack-plugin) 
+    
+    - gizp 
+    
+    - 提取Vendor包, 分为splitChunks, cdn, dllplugin 
+        - splitChunks: 直接打包成一个vendor.js, 所有依赖包都在这里
+        
+        - CDN
+            - index.html 不要被缓存
+            - 静态资源需要加上hash
+            - 如果要将图片,js放到指定CDN ,一般都加上publicPath, 如 publicPath : ’ // js.cdn . com/id / ’
+            - 但我一般只放vue vuex axios ivew等静态资源, 采用externals
+            - 在 htmlwebpackplugin 配置变量,生产环境再添加script资源
+            - CDN需要计费,所以本地开发调试我们就不使用 externals
+            - 弊端: 如果使用外人的CDN,CDN有问题那就项目就挂了; CDN需要计费
+        - dllplugin(DllPlugin 和 DllReferencePlugin 搭配), 生成 动态链接库, 不用每次打包, 提升构建速度(作用和splitChunks一样,只是不用每次都构建)
+            - 先执行npm run dll, 打包 webpack.dll.config.js 文件
+            -    
+            
+        

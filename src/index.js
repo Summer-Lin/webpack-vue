@@ -8,8 +8,8 @@ import { setup } from "@/lang/index.js";
 import {LOCALE_KEY} from "@/utils/config.js"
 import {storage} from "@/utils/global.js"
 
-//iview组件样式
-import 'view-design/dist/styles/iview.css';
+//iview组件样式, 已经在 index.html引入,这里可以不引入
+// import 'view-design/dist/styles/iview.css';
 import ViewUI from 'view-design';
 
 Vue.use(ViewUI);

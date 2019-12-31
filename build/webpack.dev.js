@@ -7,7 +7,7 @@ module.exports = merge(common, {
     devtool: 'inline-source-map',
     
     output: { // 输出
-        filename: 'js/[name].[hash].js', // 每次保存 hash 都变化
+        filename: 'js/[name].[hash:8].js', // 每次保存 hash 都变化
         path: path.resolve(__dirname, '../dist')
       },
 

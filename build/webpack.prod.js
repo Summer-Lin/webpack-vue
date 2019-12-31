@@ -24,25 +24,46 @@ if (process.env.NODE_ENV === "analyzer") {
 module.exports = merge(common, {
   mode: "production",
   output: {
-    // chunkhash是针对entry的每一个入口文件，独立的hash。如果entry里面的其中一个文件内容改变，只会改变这个入口文件build之后的文件名，而不会影响到其他文件
-    filename: "js/[name].[chunkhash].js", //contenthash 若文件内容无变化，则contenthash 名称不变
+    // hash: 每次构建,生成唯一的哈希值
+    // chunkhash: 是针对entry的每一个入口文件，独立的hash。如果entry里面的其中一个文件内容改变，只会改变这个入口文件build之后的文件名，而不会影响到其他文件
+    // contenthash:根据文件内容计算而来。
+    filename: "js/[name].[chunkhash:8].js",
     path: path.resolve(__dirname, "../dist")
   },
 
+  // 排除将以下资源打包到bundle
+  // 这样理解: import Vue from 'vue'; 这样会被打包到chunk里面
+  // 所以用externals , 将导入语句里的 vue 替换成运行环境里的全局变量Vue
+  // 左边就是package.json dependencies的值,  右边是代码  export 出来的值或者 全局的值,就是我们import的值
+  // view-design 有个坑, 需要转成 iview 再转成 ViewUI
+  // externals: {
+  //   "vue": 'Vue',
+  //   "axios": 'axios',
+  //   "vue-router": 'VueRouter',
+  //   "view-design": 'iview',
+  //   "iview": 'ViewUI',
+  //   "vue-i18n": 'VueI18n',
+  // },
+
   optimization: {
-    // 分离chunks
+    // 使用了 externals , 就不打包 vendor 了
+
+    // 分离chunks, 根据入口文件作为拆分
     splitChunks: {
       chunks: "all",
       cacheGroups: {
+
+
         //打包的 js 文件夹中会多一个 vendor.js
         vendor: {
           name: "vendor",
           test: /[\\/]node_modules[\\/]/,
-          priority: 10,
+          priority: 100,
           chunks: "initial" // 只打包初始时依赖的第三方
         },
 
         default: {
+          // 进行耕细粒度的拆分
           minChunks: 2,
           priority: 90, // 优先级配置项
           reuseExistingChunk: true
@@ -116,7 +137,7 @@ module.exports = merge(common, {
               limit: 5000,
               //启用CommonJS模块语法, img src路径不会显示 object module
               esModule: false,
-              name: "imgs/[hash].[ext]"
+              name: "imgs/[name].[hash:8].[ext]"
             }
           }
           // 图片压缩
@@ -150,7 +171,7 @@ module.exports = merge(common, {
 
     new MiniCssExtractPlugin({
       // contenthash 只改变修改的内容文件的哈希值
-      filename: "css/[name].[contenthash].css"
+      filename: "css/[name].[contenthash:8].css"
     })
   ].concat(mergePlugins)
 });

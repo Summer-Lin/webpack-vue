@@ -16,7 +16,6 @@
 
         <Button type="primary">{{$t('common.search')}}</Button>
         <Button type="dashed">{{$t('common.reset')}}</Button>
-        <Button type="dashed">{{$t('common.reset')}}</Button>
       </Form>
     </div>
 
@@ -125,6 +124,10 @@ export default {
   }
 
   .page1 {
+    padding: 10px;
+    text-align: right;
+  }
+  .page2 {
     padding: 10px;
     text-align: right;
   }

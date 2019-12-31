@@ -53,6 +53,11 @@ module.exports = {
 
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, '../index.html'),
+            isProd: process.env.NODE_ENV === "development" ? false : true
+        }),
+
+        new webpack.DllReferencePlugin({
+            manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
         }),
 
         new HappyPack({
