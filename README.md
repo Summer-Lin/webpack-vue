@@ -81,7 +81,12 @@
     
     - gizp 
     
-    - 提取Vendor包, 分为splitChunks, cdn, dllplugin 
+    - 提取Vendor包, 分为splitChunks, cdn, dllplugin
+        - 差别：
+          - splitChunks 每次都会构建，但有hash值
+          - CDN速度快，但计费，整个包得下载
+          - dllplugin，不用构建，开发比较快
+
         - splitChunks: 直接打包成一个vendor.js, 所有依赖包都在这里
         
         - CDN
@@ -92,8 +97,12 @@
             - 在 htmlwebpackplugin 配置变量,生产环境再添加script资源
             - CDN需要计费,所以本地开发调试我们就不使用 externals
             - 弊端: 如果使用外人的CDN,CDN有问题那就项目就挂了; CDN需要计费
-        - dllplugin(DllPlugin 和 DllReferencePlugin 搭配), 生成 动态链接库, 不用每次打包, 提升构建速度(作用和splitChunks一样,只是不用每次都构建)
-            - 先执行npm run dll, 打包 webpack.dll.config.js 文件
-            -    
+
+        - dllplugin(DllPlugin 和 DllReferencePlugin 搭配), 生成 动态链接库, 不用每次打包,
+        提升构建速度(作用和splitChunks一样,只是不用每次都构建)
+            - 1）先执行npm run dll, 打包 webpack.dll.config.js 文件
+            - 2）在 webpack.base.js 添加 DllReferencePlugin 插件，引入json
+            - 3）在 index.html文件引入dll文件
+
             
         

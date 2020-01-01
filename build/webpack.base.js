@@ -58,6 +58,7 @@ module.exports = {
 
         new webpack.DllReferencePlugin({
             manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
+
         }),
 
         new HappyPack({
