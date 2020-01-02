@@ -3,9 +3,9 @@ import App from './App.vue'
 import router from "./router/index"
 import "./style/reset.css"
 import "./font/iconfont.css"
-import i18n from './lang/index.js'
-import "babel-polyfill"
-import { setup } from "@/lang/index.js";
+
+
+import {i18n, loadLanguageAsync } from "./lang/index";
 import {LOCALE_KEY} from "@/utils/config.js"
 import {storage} from "@/utils/global.js"
 
@@ -16,15 +16,11 @@ import ViewUI from 'view-design';
 Vue.use(ViewUI);
 
 
-// let lang = storage.getItem(LOCALE_KEY)
-// setup(lang)
-
-
-
-// router.beforeEach((to, from, next) => {
-//   let lang = storage.getItem(LOCALE_KEY)
-//   loadLanguageAsync(lang).then(() => next())
-// })
+router.beforeEach((to, from, next) => {
+  let tempLang = storage.getItem(LOCALE_KEY)
+  let lang = tempLang === null ? "zh" : tempLang
+  loadLanguageAsync(lang).then(() => next())
+})
 
 new Vue({
   el: '#app',

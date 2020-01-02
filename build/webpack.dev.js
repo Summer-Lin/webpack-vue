@@ -13,7 +13,7 @@ module.exports = merge(common, {
 
     // 开发服务器
     devServer: { 
-        port: 8080,
+        port: 8088,
         contentBase: '../dist',
         host: 'localhost',
         //compress: true // 可以读取gzip文件

@@ -85,22 +85,22 @@ module.exports = merge(common, {
 
     minimizer: [
       // 压缩JS
-      new TerserPlugin({
-        parallel: true, // 多线程平行压缩
-        cache: true, // 开启缓存
-        terserOptions: {
-          ecma: undefined, // 指定ES6,7,8... 版本
-          warnings: false, // 去除警告
-          parse: {},
-          compress: {
-            warnings: false,
-            //drop_console: true,
-            drop_debugger: true, // 去除debugger
-            //pure_funcs: ["console.log"] // 移除console
-          },
-          comments: false
-        }
-      }),
+      // new TerserPlugin({
+      //   parallel: true, // 多线程平行压缩
+      //   cache: true, // 开启缓存
+      //   terserOptions: {
+      //     ecma: undefined, // 指定ES6,7,8... 版本
+      //     warnings: false, // 去除警告
+      //     parse: {},
+      //     compress: {
+      //       warnings: false,
+      //       //drop_console: true,
+      //       drop_debugger: true, // 去除debugger
+      //       //pure_funcs: ["console.log"] // 移除console
+      //     },
+      //     comments: false
+      //   }
+      // }),
 
       // 压缩css
       new OptimizeCSSAssetsPlugin()
