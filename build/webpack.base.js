@@ -9,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+// 构建进度
+const WebpackBar = require('webpackbar');
 
 module.exports = {
     entry: './src/index.js', //入口
@@ -56,9 +58,9 @@ module.exports = {
             isProd: process.env.NODE_ENV === "development" ? false : true
         }),
 
-        new webpack.DllReferencePlugin({
-            manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
-        }),
+        // new webpack.DllReferencePlugin({
+        //     manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
+        // }),
 
         new HappyPack({
             //用id来标识 happypack处理类文件
@@ -74,6 +76,8 @@ module.exports = {
             //允许 HappyPack 输出日志
             verbose: true,
         }),
+
+        new WebpackBar()
     ],
 };
 

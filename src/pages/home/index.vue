@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { getUrlParams } from "../../utils/global.js";
+import { getUrlParams, dateFormat, storage } from "../../utils/global.js";
 export default {
   name: "Home",
 
@@ -99,6 +99,7 @@ export default {
   created() {
     this.searchParams = getUrlParams(window.location.href);
     console.log(this.searchParams);
+    dateFormat(1577946055, "yyyy-MM-DD hh:mm:ss")
   }
 };
 </script>

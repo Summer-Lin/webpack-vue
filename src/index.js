@@ -4,6 +4,7 @@ import router from "./router/index"
 import "./style/reset.css"
 import "./font/iconfont.css"
 import i18n from './lang/index.js'
+import "babel-polyfill"
 import { setup } from "@/lang/index.js";
 import {LOCALE_KEY} from "@/utils/config.js"
 import {storage} from "@/utils/global.js"

@@ -16,6 +16,7 @@ module.exports = merge(common, {
         port: 8080,
         contentBase: '../dist',
         host: 'localhost',
+        //compress: true // 可以读取gzip文件
     },
    
     module: {

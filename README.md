@@ -77,9 +77,21 @@
     - css抽离 (mini-css-extract-plugin 抽离/optimize-css-assets-webpack-plugin 压缩)
         - 使用 contenthash, 这样打包只修改改变的文件.
      
-    - js代码压缩(terser-webpack-plugin/uglifyjs-webpack-plugin) 
+    - js代码压缩(terser-webpack-plugin/uglifyjs-webpack-plugin)
+    
+    - Tree-Shaking 不打包没使用的代码 
+        - ES6 import 和 export 语法才有用
+        - mode模式为 "production"
+        - 以上会显示 /* unused harmony export toBindCard */ 等这样的注释,但代码还是会显示出来,如图
+        - 最后得 通过 uglifyjs-webpack-plugin 和 terser-webpack-plugin 这样的插件去剔除多余代码
     
     - gizp 
+        - 目的: 压缩代码体积.
+        - 原理: 是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小。文件中代码的重复率越高，那么压缩的效率就越高.
+        - 以服务器压缩的时间开销和 CPU 开销（以及浏览器解析压缩文件的开销）为代价，省下了一些传输过程中的时间开销。
+        - webpack prod配置
+        - nginx配置,如图
+        - 注意: 图片不要压缩,因为我们都已经压缩过了,采用gzip会变大,如图
     
     - 提取Vendor包, 分为splitChunks, cdn, dllplugin 
         - splitChunks: 直接打包成一个vendor.js, 所有依赖包都在这里
