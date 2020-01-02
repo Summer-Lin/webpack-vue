@@ -38,8 +38,15 @@ module.exports = {
         ]
     },
 
+    watchOptions : {
+        //不监听的 node_modules 目录下的文件
+        ignored : /node_modules/,
+    },
+
     resolve: {
         extensions: ['.js', '.vue'],
+        //先去当前目录的 node_modules 目录下去找我们想找的模块，如果没找到就去上一级目录 ../node_modules 中找，再没有就去 ../../node_modules 中找，以此类推
+        modules: [path.resolve( __dirname,'../node modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js',
             '@': resolve('src'),

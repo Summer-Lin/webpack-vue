@@ -7,8 +7,13 @@
 
 [面试题](https://juejin.im/post/5e083e17f265da33997a4561?utm_source=gold_browser_extension)
 
-[尝试这种多语言方法](https://blog.csdn.net/ange2017/article/details/102818341)
+
+
+
 #浅谈前端性能优化
+
+### 推荐链接
+[前端性能优化之旅](https://alienzhou.github.io/fe-performance-journey/#%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%88%EF%BC%9F)
 
 前端性能优化,一般是利用浏览器缓存,压缩代码, CDN......
 
@@ -21,12 +26,21 @@
 
 ### 性能优化方向
 - 代码层级
+ - 预加载
+    - quicklink轻量库: 预加载,类似滚动懒加载,执行
  - 公共组件
  - 多语言懒加载
  - 路由懒加载
- - 图片懒加载
- - 压缩图片
- - 字体图标和SVG图标
+ - 图片
+    - 雪碧图
+    - 懒加载
+    - SVG
+    - 字体图标
+    - webp
+        - 兼容性相对较差,有损压缩质量相对好
+    - 熊猫压缩
+    - imagemin 插件
+    
 
 ### 浏览器请求
   - 阻挡（浏览器根据同个域名下有限制并发连接数，不同浏览器限制不同，同个域名请求数一般是4~8个）
