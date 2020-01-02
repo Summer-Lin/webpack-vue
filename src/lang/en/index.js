@@ -1,17 +1,46 @@
-import merchantDetail from "./merchant/detail.js"
-import merchantAdd from "./merchant/add.js"
-import home from "./home/index.js"
-import product from "./product/index.js" 
-import layout from "./component/layout.js"
-
 export default {
     common: {
         search: "search",
         reset: "reset"
     },
-    home,
-    product,
-    merchantAdd,
-    merchantDetail,
-    layout
+    home: {
+        title: "I am home page",
+        input1: "search one",
+        input2: "search two",
+        name:　"Name",
+        age: "Age",
+        address:"Address"
+    },
+    product:{
+        title: "I am prduct page",
+        input1: "search one",
+        input2: "search two",
+        name:　"Name",
+        age: "Age",
+        address:"Address"
+    },
+    merchantAdd: {
+        title: "I am merchant - add page",
+        input1: "search one",
+        input2: "search two",
+        name:　"Name",
+        age: "Age",
+        address:"Address"
+    },
+    merchantDetail: {
+        title: "I am merchant - detail page",
+        input1: "search one",
+        input2: "search two",
+        name:　"Name",
+        age: "Age",
+        address:"Address"
+
+    },
+    layout: {
+        home: "home",
+        product: "product",
+        merchant: "merchant",
+        merchantAdd: "merchantAdd",
+        merchantDetail: "merchantDetail"
+    }
 }

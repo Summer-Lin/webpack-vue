@@ -7,8 +7,13 @@
 
 [面试题](https://juejin.im/post/5e083e17f265da33997a4561?utm_source=gold_browser_extension)
 
-[尝试这种多语言方法](https://blog.csdn.net/ange2017/article/details/102818341)
+
+
+
 #浅谈前端性能优化
+
+### 推荐链接
+[前端性能优化之旅](https://alienzhou.github.io/fe-performance-journey/#%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%88%EF%BC%9F)
 
 前端性能优化,一般是利用浏览器缓存,压缩代码, CDN......
 
@@ -21,12 +26,21 @@
 
 ### 性能优化方向
 - 代码层级
+ - 预加载
+    - quicklink轻量库: 预加载,类似滚动懒加载,执行
  - 公共组件
  - 多语言懒加载
  - 路由懒加载
- - 图片懒加载
- - 压缩图片
- - 字体图标和SVG图标
+ - 图片
+    - 雪碧图
+    - 懒加载
+    - SVG
+    - 字体图标
+    - webp
+        - 兼容性相对较差,有损压缩质量相对好
+    - 熊猫压缩
+    - imagemin 插件
+    
 
 ### 浏览器请求
   - 阻挡（浏览器根据同个域名下有限制并发连接数，不同浏览器限制不同，同个域名请求数一般是4~8个）
@@ -77,9 +91,21 @@
     - css抽离 (mini-css-extract-plugin 抽离/optimize-css-assets-webpack-plugin 压缩)
         - 使用 contenthash, 这样打包只修改改变的文件.
      
-    - js代码压缩(terser-webpack-plugin/uglifyjs-webpack-plugin) 
+    - js代码压缩(terser-webpack-plugin/uglifyjs-webpack-plugin)
+    
+    - Tree-Shaking 不打包没使用的代码 
+        - ES6 import 和 export 语法才有用
+        - mode模式为 "production"
+        - 以上会显示 /* unused harmony export toBindCard */ 等这样的注释,但代码还是会显示出来,如图
+        - 最后得 通过 uglifyjs-webpack-plugin 和 terser-webpack-plugin 这样的插件去剔除多余代码
     
     - gizp 
+        - 目的: 压缩代码体积.
+        - 原理: 是在一个文本文件中找出一些重复出现的字符串、临时替换它们，从而使整个文件变小。文件中代码的重复率越高，那么压缩的效率就越高.
+        - 以服务器压缩的时间开销和 CPU 开销（以及浏览器解析压缩文件的开销）为代价，省下了一些传输过程中的时间开销。
+        - webpack prod配置
+        - nginx配置,如图
+        - 注意: 图片不要压缩,因为我们都已经压缩过了,采用gzip会变大,如图
     
     - 提取Vendor包, 分为splitChunks, cdn, dllplugin
         - 差别：

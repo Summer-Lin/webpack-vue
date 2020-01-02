@@ -9,6 +9,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HappyPack = require('happypack');
 const os = require('os');
 const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
+// 构建进度
+const WebpackBar = require('webpackbar');
 
 module.exports = {
     entry: './src/index.js', //入口
@@ -36,8 +38,15 @@ module.exports = {
         ]
     },
 
+    watchOptions : {
+        //不监听的 node_modules 目录下的文件
+        ignored : /node_modules/,
+    },
+
     resolve: {
         extensions: ['.js', '.vue'],
+        //先去当前目录的 node_modules 目录下去找我们想找的模块，如果没找到就去上一级目录 ../node_modules 中找，再没有就去 ../../node_modules 中找，以此类推
+        modules: [path.resolve( __dirname,'../node modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js',
             '@': resolve('src'),
@@ -56,10 +65,10 @@ module.exports = {
             isProd: process.env.NODE_ENV === "development" ? false : true
         }),
 
-        new webpack.DllReferencePlugin({
-            manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
-
-        }),
+        // new webpack.DllReferencePlugin({
+        //     manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
+        //
+        // }),
 
         new HappyPack({
             //用id来标识 happypack处理类文件
@@ -75,6 +84,8 @@ module.exports = {
             //允许 HappyPack 输出日志
             verbose: true,
         }),
+
+        new WebpackBar()
     ],
 };
 

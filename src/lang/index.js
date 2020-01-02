@@ -1,63 +1,45 @@
+// 多语言设置
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 
-import {LOCALE_KEY} from "@/utils/config.js"
-import {storage} from "@/utils/global.js"
-
+import axios from 'axios'
 import {locale} from 'view-design';
 
+//iview语言
 import viewen from 'view-design/dist/locale/en-US';
 import viewzh from 'view-design/dist/locale/zh-CN';
 
-
-
-import zh from "./zh/index.js"
-
 Vue.use(VueI18n)
 
-const DEFAULT_LANG = 'zh'
-
-const locales = {
-  zh
-}
-
-const i18n = new VueI18n({
-  locale: DEFAULT_LANG,
-  messages: locales,
+export const i18n = new VueI18n({
+  locale: 'zh', // 设置语言环境
+  fallbackLocale: 'zh',
+  messages: {} // 设置语言环境信息, 如果这里设置,则会打包到main.js
 })
 
-export const setup = async lang => {
-  console.log('lang', lang)
-    if (lang === undefined) {
-      lang = storage.getItem(LOCALE_KEY)
-      if (locales[lang] === undefined) {
-        lang = DEFAULT_LANG
-      }
-    }
-    storage.setItem(LOCALE_KEY, lang)
-  
-    // Object.keys(locales).forEach(lang => {
-    //   document.body.classList.remove(`lang-${lang}`)
-    // })
-    // document.body.classList.add(`lang-${lang}`)
-    // document.body.setAttribute('lang', lang)
-    document.querySelector('html').setAttribute('lang', lang)
-    
-    i18n.locale = lang
+const loadedLanguages = [] // 预装默认语言
 
-    //view 多语言
-    if(lang === undefined || lang === "zh") {
-        locale(viewzh)
-    } else {
-        locale(viewen)
-    }
+function setI18nLanguage (lang) {
+  i18n.locale = lang
+  axios.defaults.headers.common['Accept-Language'] = lang
+  document.querySelector('html').setAttribute('lang', lang)
+  return lang
+}
 
-    const res = await import(`./${lang}/index.js`)
-    i18n.setLocaleMessage(lang, res.default)
-   
+export function loadLanguageAsync (lang) {
+  //设置iview 组件多语言
+  if(lang === undefined || lang === "zh") {
+    locale(viewzh)
+  } else {
+    locale(viewen)
   }
-let lang = storage.getItem(LOCALE_KEY)
-setup(lang);
 
-
-export default i18n
+  if (!loadedLanguages.includes(lang)) {
+    return import(/* webpackChunkName: "lang-[request]" */ `./${lang}/index.js`).then(msgs => {
+      i18n.setLocaleMessage(lang, msgs.default)
+      loadedLanguages.push(lang)
+      return setI18nLanguage(lang)
+    })
+  }
+  return Promise.resolve(setI18nLanguage(lang))
+}

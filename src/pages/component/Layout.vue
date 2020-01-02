@@ -73,8 +73,6 @@
 </template>
 
 <script>
-import { log } from "util";
-import {setup} from "@/lang/index.js"
 import {LOCALE_KEY} from "@/utils/config.js"
 import {storage} from "@/utils/global.js"
 
@@ -86,7 +84,18 @@ export default {
       activeName: "",
       openNames: [],
       //菜单
-      // menuArray:[],
+      // menuArray:[
+      //   { name: "首页", path: "/home" },
+      //   { name: "产品", path: "/product" },
+      //   {
+      //     name: "商户",
+      //     path: "/merchant",
+      //     children: [
+      //       { parent: "/merchant", name: "商户添加", path: "/merchant/add" },
+      //       { parent: "/merchant", name: "商户详情", path: "/merchant/detail" }
+      //     ]
+      //   }
+      // ],
       menuArray: [
         { name: this.$t('layout.home'), path: "/home" },
         { name: this.$t('layout.product'), path: "/product" },

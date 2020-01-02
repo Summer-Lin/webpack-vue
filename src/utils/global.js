@@ -8,20 +8,23 @@ export function getUrlParams(search) {
         var val = hashDict[1]
         params[key] = decodeURIComponent(val)
     })
-
+    console.log("getUrlParams")
     return params
 }
 
 
-function toUrl(str, query) {
+export function toUrl(str, query) {
+    console.log("toUrl")
     window.location.href = (query)? str + '?' + query : str
 }
 
-function toBindCard() {
+export function toBindCard() {
+    console.log("toBindCard")
     toUrl('/terminal/citic/toBindCard')
 }
 
 export function dateFormat (_date, format) {
+    console.log("dateFormat")
     var date = _date instanceof Date ? _date : new Date(_date)
     var dateExtra = {
         "M+": date.getMonth() + 1,

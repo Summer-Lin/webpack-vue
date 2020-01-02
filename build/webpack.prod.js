@@ -14,11 +14,23 @@ const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const TerserPlugin = require('terser-webpack-plugin');
 //代码分析器
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-
+// gzip压缩
+const CompressionPlugin = require('compression-webpack-plugin');
 
 let mergePlugins = []
 if (process.env.NODE_ENV === "analyzer") {
   mergePlugins.push(new BundleAnalyzerPlugin())
+}
+
+if(process.env.NODE_ENV === "gzip") {
+  mergePlugins.push(new CompressionPlugin({
+    filename: '[path].gz[query]', // 目标文件名
+    algorithm: 'gzip', // 使用 gzip 压缩
+    test: /\.js$|\.css$/, // 压缩 js 与 css
+    deleteOriginalAssets: false, //不删除源文件,用来保留服务器不支持gzip
+    threshold: 10240, // 资源文件大于 10240B = 10kB 时会被压缩
+    //minRatio: 0.8,   // 最小压缩比达到 0.8 时才会被压缩
+  }),)
 }
 
 module.exports = merge(common, {
@@ -36,14 +48,14 @@ module.exports = merge(common, {
   // 所以用externals , 将导入语句里的 vue 替换成运行环境里的全局变量Vue
   // 左边就是package.json dependencies的值,  右边是代码  export 出来的值或者 全局的值,就是我们import的值
   // view-design 有个坑, 需要转成 iview 再转成 ViewUI
-  // externals: {
-  //   "vue": 'Vue',
-  //   "axios": 'axios',
-  //   "vue-router": 'VueRouter',
-  //   "view-design": 'iview',
-  //   "iview": 'ViewUI',
-  //   "vue-i18n": 'VueI18n',
-  // },
+  externals: {
+    "vue": 'Vue',
+    "axios": 'axios',
+    "vue-router": 'VueRouter',
+    "view-design": 'iview',
+    "iview": 'ViewUI',
+    "vue-i18n": 'VueI18n',
+  },
 
   optimization: {
     // 使用了 externals , 就不打包 vendor 了
@@ -73,22 +85,22 @@ module.exports = merge(common, {
 
     minimizer: [
       // 压缩JS
-      new TerserPlugin({
-        parallel: true, // 多线程平行压缩
-        cache: true, // 开启缓存
-        terserOptions: {
-          ecma: undefined, // 指定ES6,7,8... 版本
-          warnings: false, // 去除警告
-          parse: {},
-          compress: {
-            warnings: false,
-            drop_console: true,
-            drop_debugger: true, // 去除debugger
-            pure_funcs: ["console.log"] // 移除console
-          },
-          comments: false
-        }
-      }),
+      // new TerserPlugin({
+      //   parallel: true, // 多线程平行压缩
+      //   cache: true, // 开启缓存
+      //   terserOptions: {
+      //     ecma: undefined, // 指定ES6,7,8... 版本
+      //     warnings: false, // 去除警告
+      //     parse: {},
+      //     compress: {
+      //       warnings: false,
+      //       //drop_console: true,
+      //       drop_debugger: true, // 去除debugger
+      //       //pure_funcs: ["console.log"] // 移除console
+      //     },
+      //     comments: false
+      //   }
+      // }),
 
       // 压缩css
       new OptimizeCSSAssetsPlugin()
