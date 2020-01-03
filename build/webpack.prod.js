@@ -17,6 +17,8 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 // gzip压缩
 const CompressionPlugin = require('compression-webpack-plugin');
 
+const WorkboxPlugin = require('workbox-webpack-plugin');
+
 let mergePlugins = []
 if (process.env.NODE_ENV === "analyzer") {
     mergePlugins.push(new BundleAnalyzerPlugin())
@@ -201,6 +203,15 @@ module.exports = merge(common, {
         new MiniCssExtractPlugin({
             // contenthash 只改变修改的内容文件的哈希值
             filename: "css/[name].[contenthash:8].css"
+        }),
+
+        new WorkboxPlugin.GenerateSW({
+            clientsClaim: true,
+            skipWaiting: true,
+            importWorkboxFrom: 'local',
+            include: [/\.js$/, /\.css$/, /\.html$/,/\.jpg/,/\.jpeg/,/\.svg/,/\.webp/,/\.png/],
         })
+
+
     ].concat(mergePlugins)
 });

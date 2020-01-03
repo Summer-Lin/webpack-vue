@@ -12,6 +12,7 @@ const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 // 构建进度
 const WebpackBar = require('webpackbar');
 
+
 module.exports = {
     entry: './src/index.js', //入口
     module: {

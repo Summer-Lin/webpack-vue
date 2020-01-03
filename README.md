@@ -1,5 +1,6 @@
 [对应的github项目](https://github.com/zxpsuper/createVue)
 [webpack详细配置](https://juejin.im/post/5de87444518825124c50cd36)
+[webpack4大结局：加入腾讯IM配置策略，实现前端工程化环境极致优化](https://cloud.tencent.com/developer/article/1478964)
 
 
 
@@ -10,6 +11,7 @@
 
 ### 推荐链接
 [前端性能优化之旅](https://alienzhou.github.io/fe-performance-journey/#%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%88%EF%BC%9F)
+[webpack 中使用 workbox 实现 PWA](https://blog.csdn.net/mjzhang1993/article/details/79584854)
 
 前端性能优化,一般是利用浏览器缓存,压缩代码, CDN......
 
@@ -49,6 +51,15 @@
     - 浏览器对网站第一次的域名DNS解析查找流程依次为：浏览器缓存——系统缓存——路由器缓存——ISP DNS缓存——递归搜索
     - 注意： 多页面重复DNS预解析会增加重复DNS查询次数。
     - 类似的用法  - 预加载 把相关的资源文件预先加载好 <link rel="preload" href="/styles.css" as="style">
+    - prefetch,preload对首屏优化提升的比较明显
+    - preload: 对当前页面需要的资源，使用  进行预加载; prefetch: 对其它页面需要的资源进行  预加载。
+    -   <!-- 对 style.css 和 index.js 进行 preload 预加载 -->
+        <link rel="preload" href="style.css" as="style">
+        <link rel="preload" href="index.js" as="script">
+      
+        <!-- 对资源进行 prefetch 预加载 -->
+        <link rel="prefetch" href="next.css">
+        <link rel="prefetch" href="next.js">
   - 建立连接
   - 发送请求
   - 等待响应
@@ -126,6 +137,12 @@
             - 1）先执行npm run dll, 打包 webpack.dll.config.js 文件
             - 2）在 webpack.base.js 添加 DllReferencePlugin 插件，引入json
             - 3）在 index.html文件引入dll文件
+    
+    - 代码分割配合PWA+预渲染+preload是首屏优化的巅峰,但是pwa无法缓存预渲染的html文件
+    
+    - pwa(Progressive Web App) 渐进式增强WEB应用
+        - 在移动端利用提供的标准化框架，在网页应用中实现和原生应用相近的用户体验的渐进式网页应用
+        - 即时加载，即使在不确定的网络条件下也不会受到影响
 
             
         
