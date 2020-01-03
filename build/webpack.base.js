@@ -46,7 +46,7 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         //先去当前目录的 node_modules 目录下去找我们想找的模块，如果没找到就去上一级目录 ../node_modules 中找，再没有就去 ../../node_modules 中找，以此类推
-        modules: [path.resolve( __dirname,'../node modules')],
+        modules: [path.resolve( __dirname,'../node_modules')],
         alias: {
             vue: 'vue/dist/vue.esm.js',
             '@': resolve('src'),
@@ -65,6 +65,7 @@ module.exports = {
             isProd: process.env.NODE_ENV === "development" ? false : true
         }),
 
+        // 使用dll动态链接库才打卡
         // new webpack.DllReferencePlugin({
         //     manifest: path.resolve(__dirname, '../dist/dll/vendor.manifest.json'),
         //

@@ -17,7 +17,7 @@ module.exports = merge(common, {
         // contentBase: '../dist',
         // 使用 dllplugin 的时候 ， npm run start 要把路劲改为以下这个才能读到dll文件
         contentBase: path.resolve(__dirname, '../dist'),
-        contentBase: '../dist',
+        //contentBase: '../dist',
         host: 'localhost',
     },
    

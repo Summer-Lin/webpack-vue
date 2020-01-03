@@ -1,11 +1,7 @@
-[webpack参考链接](https://juejin.im/post/5b7d350951882542f3278b11#heading-0)
 [对应的github项目](https://github.com/zxpsuper/createVue)
 [webpack详细配置](https://juejin.im/post/5de87444518825124c50cd36)
-[elementUI动态加载多语言](https://segmentfault.com/a/1190000020740061)
 
-[另外一种多语言解决方法](https://github.com/kazupon/vue-i18n/issues/223)
 
-[面试题](https://juejin.im/post/5e083e17f265da33997a4561?utm_source=gold_browser_extension)
 
 
 
@@ -126,6 +122,7 @@
 
         - dllplugin(DllPlugin 和 DllReferencePlugin 搭配), 生成 动态链接库, 不用每次打包,
         提升构建速度(作用和splitChunks一样,只是不用每次都构建)
+            - webpack.base.js/ index.html 对应内容打开;  打包webpack.prod.js external splitChunks注释; 本地开发 webpack.dev.js
             - 1）先执行npm run dll, 打包 webpack.dll.config.js 文件
             - 2）在 webpack.base.js 添加 DllReferencePlugin 插件，引入json
             - 3）在 index.html文件引入dll文件
