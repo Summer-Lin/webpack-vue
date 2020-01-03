@@ -71,6 +71,7 @@ module.exports = {
         //
         // }),
 
+        // js css都可以用happyPack 开启多线程
         new HappyPack({
             //用id来标识 happypack处理类文件
             id: 'happyBabel',
