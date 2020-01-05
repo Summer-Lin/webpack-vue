@@ -16,7 +16,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 // gzip压缩
 const CompressionPlugin = require('compression-webpack-plugin');
-
+// PWA配置
 const WorkboxPlugin = require('workbox-webpack-plugin');
 
 let mergePlugins = []
@@ -205,12 +205,12 @@ module.exports = merge(common, {
             filename: "css/[name].[contenthash:8].css"
         }),
 
-        new WorkboxPlugin.GenerateSW({
-            clientsClaim: true,
-            skipWaiting: true,
-            importWorkboxFrom: 'local',
-            include: [/\.js$/, /\.css$/, /\.html$/,/\.jpg/,/\.jpeg/,/\.svg/,/\.webp/,/\.png/],
-        })
+        // new WorkboxPlugin.GenerateSW({
+        //     clientsClaim: true,
+        //     skipWaiting: true,
+        //     importWorkboxFrom: 'local',
+        //     include: [/\.js$/, /\.css$/, /\.html$/,/\.jpg/,/\.jpeg/,/\.svg/,/\.webp/,/\.png/],
+        // })
 
 
     ].concat(mergePlugins)

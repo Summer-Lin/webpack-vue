@@ -25,10 +25,13 @@
 ### 性能优化方向
 - 代码层级
  - 预加载
-    - quicklink轻量库: 预加载,类似滚动懒加载,执行
  - 公共组件
  - 多语言懒加载
  - 路由懒加载
+ - 视频
+    - 页面中出现音视频标签，第一次加载会很慢
+    - 将音视频的preload=none
+   
  - 图片
     - 雪碧图
     - 懒加载
@@ -60,6 +63,21 @@
         <!-- 对资源进行 prefetch 预加载 -->
         <link rel="prefetch" href="next.css">
         <link rel="prefetch" href="next.js">
+    
+    - webpack 4.6+版本以上 添加新特性
+        - 在父组件完成加载时，利用浏览器空闲时间预加载模块， 同时会显示在浏览器上，能显著减少页面的初次加载时间.
+            - 可传递数字作为值，如：webpackPrefetch:2 将在webpackPrefetch:1之前被预取,  true则表示0 
+            - import(
+                /* webpackPrefetch: true */  //
+                /* webpackChunkName: "merchantAdd" */ 
+                "../pages/merchant/add.vue"
+                );
+        - 当前组件会使用到。小心使用，会造成阻塞.  
+            - import(
+                /* webpackPreload: true */  //
+                /* webpackChunkName: "merchantAdd" */ 
+                "../pages/merchant/add.vue"
+                );    
   - 建立连接
   - 发送请求
   - 等待响应
@@ -143,6 +161,28 @@
     - pwa(Progressive Web App) 渐进式增强WEB应用
         - 在移动端利用提供的标准化框架，在网页应用中实现和原生应用相近的用户体验的渐进式网页应用
         - 即时加载，即使在不确定的网络条件下也不会受到影响
+
+
+
+
+
+ ```
+分析网站：
+1、http://webpack.github.io/analyse/
+2、https://alexkuz.github.io/webpack-chart/
+3、https://chrisbateman.github.io/webpack-visualizer/
+4、https://github.com/webpack-contrib/webpack-bundle-analyzer
+5、https://webpack.jakoblind.no/optimize/
+6、https://github.com/bundle-stats/bundle-stats
+
+代码使用率
+1、打开开发者工具F12
+2、windows： ctrl+shift+p
+　　　 mac： command+shift+p
+3、选择show coverage选项
+
+
+ ```       
 
             
         
