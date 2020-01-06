@@ -206,9 +206,9 @@ module.exports = merge(common, {
         }),
 
         // new WorkboxPlugin.GenerateSW({
-        //     clientsClaim: true,
-        //     skipWaiting: true,
-        //     importWorkboxFrom: 'local',
+        //     clientsClaim: true,   // Service Worker 被激活后使其立即获得页面控制权
+        //     skipWaiting: true,   // 强制等待中的 Service Worker 被激活
+        //     importWorkboxFrom: 'local',  // 将所有Workbox运行时库复制到service worker的带版本的目录中，然后配置service worker来使用这些文件
         //     include: [/\.js$/, /\.css$/, /\.html$/,/\.jpg/,/\.jpeg/,/\.svg/,/\.webp/,/\.png/],
         // })
 
