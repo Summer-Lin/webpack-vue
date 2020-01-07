@@ -9,6 +9,22 @@
 - iview UI 4+ 组件库
 - webpack4 + 打包工具
 
+```
+执行命令
+
+        npm  install   // 安装package.json依赖
+        
+        npm start      // 本地启动项目
+
+        npm run dll    // 打包动态链接库
+
+        npm run gzip   // 使用gzip压缩
+
+        npm run analyzer  // 打包并且开启分析网页
+
+        dll的配置跟其他不能配置共用
+```
+
 ### 性能优化方向
 - 代码层级
  - 预加载
@@ -25,6 +41,10 @@
     - 字体图标 
     - webp (如图)
         - 兼容性相对较差,有损压缩质量相对好
+        - 在线转换工具 https://www.aconvert.com/cn/image/png-to-webp/   https://cloudconvert.com/jpg-to-webp
+        - 兼容解决方法
+            - 下载webpjs http://webpjs.appspot.com/
+            - js 判断    https://blog.csdn.net/dong123dddd/article/details/52681821
     - 熊猫压缩 https://tinypng.com/
     - imagemin 插件
     
@@ -88,7 +108,7 @@
                 - 推动注意事项: 所要推送的资源文件，如果浏览器已经有缓存，推送就是浪费带宽。即使推送的文件版本更新，浏览器也会优先使用本地缓存
                     - 解决: 只对第一次访问的用户开启服务器推送。如图是 Nginx 官方给出的示例，根据 Cookie 判断是否为第一次访问
                          
-        - 配置,非常简单, 如图, 目前http2浏览器仅支持https, 配置后重启即可
+        - 配置, 目前http2浏览器仅支持https,还需要配置SSL,配置后重启即可
             - 测试连接 https://tools.keycdn.com/http2-test
         - 使用http2, htpp1的优化可以弃用: 合并文件、内联资源、雪碧图、域名分片, 使用 http2 尽可能将资源细粒化，文件分解地尽可能散，不用担心请求数多
         
@@ -153,11 +173,12 @@
 
 
 ### 推荐链接
-
+[WebP 应用探寻以及与 PNG 的对比](http://www.yyyweb.com/3305.html)
 [前端性能优化之旅](https://alienzhou.github.io/fe-performance-journey/#%E5%89%8D%E7%AB%AF%E9%9C%80%E8%A6%81%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E4%B9%88%EF%BC%9F)
 [webpack 中使用 workbox 实现 PWA](https://blog.csdn.net/mjzhang1993/article/details/79584854)
 [H5前端性能测试快速入门](https://cloud.tencent.com/developer/article/1191671)
 [webpack详细配置](https://juejin.im/post/5de87444518825124c50cd36)
+
 
  ```
 代码使用率工具
